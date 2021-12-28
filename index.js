@@ -13,6 +13,8 @@ app.use(cors());
 const url_icons = 'https://simpleicons.org/';
 const url_slugs = 'https://github.com/simple-icons/simple-icons/blob/develop/slugs.md';
 
+const url_badge_link = 'https://github.com/alexandresanlim/Badges4-README.md-Profile#readme';
+
 
 app.get('/',(req,res)=>{
     res.send(`hello from ${PORT}, this is the home page`);
@@ -209,6 +211,30 @@ app.get('/bsd',(req,res)=>{
 });
 
 
+app.get('/badgelinks',(req,res)=>{
+  axios.get(url_badge_link)
+      .then(response => {
+          const links_html = response.data;
+          const $ = cheerio.load(links_html);
+          const link_array = [];
+
+          $('table',links_html).each(function(){
+              const table_category_name = $(this).prev('h2').text();
+              let category_links_array = [];
+              $(this).find('tbody').find('tr').each(function(){
+                  let category_link_element = $(this).find('code').text();
+                  category_links_array.push(category_link_element);
+              });
+              const category_obj = { table_category_name,category_links_array };
+              link_array.push(category_obj);
+          });
+          res.json(link_array.filter((val)=> val.table_category_name !== ""));
+      }).catch(err => {
+        console.log(err);
+      });
+});
+
+
 app.listen(PORT,()=>{
     console.log(`server running on PORT ${PORT}`);
 })
@@ -246,3 +272,7 @@ app.listen(PORT,()=>{
 //       });
 //   });
   
+
+
+
+
