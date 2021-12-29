@@ -216,7 +216,7 @@ app.get('/badgelinks',(req,res)=>{
       .then(response => {
           const links_html = response.data;
           const $ = cheerio.load(links_html);
-          const link_array = [];
+          let link_array = [];
 
           $('table',links_html).each(function(){
               const table_category_name = $(this).prev('h2').text();
@@ -228,7 +228,8 @@ app.get('/badgelinks',(req,res)=>{
               const category_obj = { table_category_name,category_links_array };
               link_array.push(category_obj);
           });
-          res.json(link_array.filter((val)=> val.table_category_name !== ""));
+          link_array = link_array.filter((val)=> val.table_category_name !== "");
+          res.json(link_array.slice(0,-2));
       }).catch(err => {
         console.log(err);
       });

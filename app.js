@@ -3,11 +3,13 @@ console.log(77)
 let icon_button = document.getElementById('ic-btn');
 let slug_button = document.getElementById('sl-btn');
 let all_button = document.getElementById('all-btn');
+let link_button = document.getElementById('link-btn');
 let badgedump = document.getElementById('badgedump');
 let slugdump = document.getElementById('slugdump');
 let alldump = document.getElementById('alldump');
+let linkdump = document.getElementById('linkdump');
 
-let all_data = [];
+let all_data = [],all_links=[];
 let all_icons,all_slugs;
 
 async function bring_icons(){
@@ -80,6 +82,37 @@ function log_all(){
     .catch(err => console.log(err));
 }
 
+async function bring_links(){
+    let links_array = await fetch('http://localhost:8000/badgelinks');
+    let link_data = await links_array.json();
+    return link_data;
+}
+function log_links(){
+    bring_links()
+    .then(data => {
+        let snippet='';
+        data.forEach(element => {
+            snippet += JSON.stringify(element)+'<br/>';
+        });
+        linkdump.innerHTML = snippet;
+        console.log(data);
+    })
+    .catch(err => console.log(err));
+}
+
+function log_all(){
+    bring_all()
+    .then(data => {
+        let snippet='';
+        data.forEach(element => {
+            snippet += JSON.stringify(element)+'<br/>';
+        });
+        badgedump.innerHTML = snippet;
+        console.log(data);
+    })
+    .catch(err => console.log(err));
+}
+
 
 icon_button.addEventListener('click',async()=>{
     console.log('icon');
@@ -95,4 +128,10 @@ all_button.addEventListener('click',()=>{
     console.log('all');
     log_all();
 });
+
+link_button.addEventListener('click',()=>{
+    console.log('links');
+    log_links();
+});
+
 
