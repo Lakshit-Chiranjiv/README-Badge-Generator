@@ -92,7 +92,16 @@ function log_links(){
     .then(data => {
         let snippet='';
         data.forEach(element => {
-            snippet += JSON.stringify(element)+'<br/>';
+            element.table_category_name = element.table_category_name.toLowerCase().split('');
+            let elem_name = element.table_category_name.filter((val) => (val>='a' && val<='z')||val === ' ');
+            elem_name = elem_name.join('').trim();
+            elem_name = elem_name[0].toUpperCase() + elem_name.slice(1);
+            snippet += `<br/><br/><h3 class="mt-4">${elem_name}</h3><br/>`;
+            // snippet += JSON.stringify(element)+'<br/>';
+            for(let i=0;i<element.category_links_array.length;i++)
+            {
+                snippet += `<img src="${element.category_links_array[i]}" alt="badge" class="mt-2"> &nbsp;`;
+            }
         });
         linkdump.innerHTML = snippet;
         console.log(data);
