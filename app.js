@@ -100,7 +100,7 @@ function log_links(){
             // snippet += JSON.stringify(element)+'<br/>';
             for(let i=0;i<element.category_links_array.length;i++)
             {
-                snippet += `<img src="${element.category_links_array[i]}" alt="badge" class="mt-2"> &nbsp;`;
+                snippet += `<button class="mt-2"><img src="${element.category_links_array[i]}" alt="badge"></button> &nbsp;`;
             }
         });
         linkdump.innerHTML = snippet;
