@@ -100,11 +100,19 @@ function log_links(){
             // snippet += JSON.stringify(element)+'<br/>';
             for(let i=0;i<element.category_links_array.length;i++)
             {
-                snippet += `<button class="mt-2"><img src="${element.category_links_array[i]}" alt="badge"></button> &nbsp;`;
+                snippet += `<button class="mt-2 badge-btn"><img src="${element.category_links_array[i]}" alt="badge"></button> &nbsp;`;
             }
         });
         linkdump.innerHTML = snippet;
         console.log(data);
+        let btns = document.getElementsByClassName('badge-btn');
+
+        let buttonsCount = btns.length;
+        for (let i = 0; i < buttonsCount; i += 1) {
+            btns[i].onclick = function(e) {
+                console.log(this.firstChild.src);
+            };
+        }
     })
     .catch(err => console.log(err));
 }
@@ -142,5 +150,7 @@ link_button.addEventListener('click',()=>{
     console.log('links');
     log_links();
 });
+
+
 
 
