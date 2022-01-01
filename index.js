@@ -16,6 +16,7 @@ const url_slugs = 'https://github.com/simple-icons/simple-icons/blob/develop/slu
 const url_badge_link = 'https://github.com/alexandresanlim/Badges4-README.md-Profile#readme';
 
 
+
 app.get('/',(req,res)=>{
     res.send(`hello from ${PORT}, this is the home page`);
 });
@@ -229,6 +230,9 @@ app.get('/badgelinks',(req,res)=>{
               link_array.push(category_obj);
           });
           link_array = link_array.filter((val)=> val.table_category_name !== "");
+          fs.writeFile(path.join(__dirname,'db_files','links.json'), JSON.stringify(link_array, null, 4),()=>{
+            console.log("file written links");
+          });
           res.json(link_array.slice(0,-2));
       }).catch(err => {
         console.log(err);
