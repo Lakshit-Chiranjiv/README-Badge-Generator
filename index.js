@@ -40,33 +40,6 @@ app.get('/badges',(req,res)=>{
         });
 });
 
-//galat
-// app.get('/slugs',(req,res)=>{
-//     axios.get(url_slugs)
-//         .then(response => {
-//             const icons_html = response.data;
-//             const $ = cheerio.load(icons_html);
-//             const icons_slugs = [];
-//             let num = 1;
-//             let slug_obj = {};
-//             $('tr',icons_html).each(function(){
-//                 if(num % 2 !== 0)
-//                 {
-//                     const brand_name = $(this).find('code').text();
-//                     slug_obj.b_name = brand_name;
-//                 }
-//                 else
-//                 {
-//                     const brand_slug = $(this).find('code').text();
-//                     slug_obj.b_slug = brand_slug;
-//                     icons_slugs.push(slug_obj);
-//                     slug_obj = {};
-//                 }//agla tr pr chal jaaega
-//             });
-//             res.json(icons_slugs);
-//         });
-// });
-
 app.get('/slugs', (req, res) => {
     axios.get(url_slugs)
       .then(response => {
@@ -100,32 +73,6 @@ app.get('/slugs', (req, res) => {
       });
   });
 
-// app.get('/badgewrite',(req,res)=>{
-//     // fs.writeFile(path.join(__dirname,'db_files','badge.json'), icons_details, function (err) {
-//     //   if (err) throw err;
-//     //   console.log('json written for badges!');
-//     // });
-
-//     let file = fs.createWriteStream(path.join(__dirname,'db_files','badge.json'));
-//     file.on('error',(err)=> { console.log(err) });
-//     file.on('finish',()=> { console.log('badges written') });
-//     icons_details.forEach((v)=>{ file.write(JSON.stringify(`${v}`, null, 4)+'\n'); });
-//     file.end();
-//     res.send('badge write page');
-// });
-
-// app.get('/slugwrite',(req,res)=>{
-//     // fs.writeFile(path.join(__dirname,'db_files','slug.json'), icons_slugs, function (err) {
-//     //   if (err) throw err;
-//     //   console.log('json written for slugs!');
-//     // });
-
-//     let file = fs.createWriteStream(path.join(__dirname,'db_files','slug.json'));
-//     file.on('error',(err)=> { console.log(err) });
-//     file.on('finish',()=> { console.log('slugs written') });
-//     ICONS_SLUGS.forEach((v)=>{ file.write(JSON.stringify(`${v}`, null, 4)+'\n'); });
-//     file.end();
-// });
 
 
 app.get('/bsd',(req,res)=>{
@@ -190,25 +137,6 @@ app.get('/bsd',(req,res)=>{
       }).catch(err => {
         console.log(err);
       });
-
-
-
-  // let joint_array = [];
-  // let joint_obj = {};
-  // let find_obj;
-  //     for(let i=0;i<icons_details.length;i++)
-  //     {
-  //         find_obj = icons_slugs.find(ob => ob.brand_name===icons_details[i].icon_name);
-  //         if(find_obj)
-  //         {
-  //           joint_obj = {...find_obj,'badge_color': icons_details[i].badge_color};
-  //           joint_array.push(joint_obj);
-  //           joint_obj = {};
-  //         }
-  //         else continue;
-  //     }
-
-  //     res.json(joint_array);
 });
 
 
@@ -230,9 +158,10 @@ app.get('/badgelinks',(req,res)=>{
               link_array.push(category_obj);
           });
           link_array = link_array.filter((val)=> val.table_category_name !== "");
-          fs.writeFile(path.join(__dirname,'db_files','links.json'), JSON.stringify(link_array, null, 4),()=>{
-            console.log("file written links");
-          });
+          //sahi
+          // fs.writeFile(path.join(__dirname,'db_files','links.json'), JSON.stringify(link_array, null, 4),()=>{
+          //   console.log("file written links");
+          // });
           res.json(link_array.slice(0,-2));
       }).catch(err => {
         console.log(err);

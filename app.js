@@ -4,6 +4,7 @@ let icon_button = document.getElementById('ic-btn');
 let slug_button = document.getElementById('sl-btn');
 let all_button = document.getElementById('all-btn');
 let link_button = document.getElementById('link-btn');
+let copy_button = document.getElementById('copy-btn');
 let badgedump = document.getElementById('badgedump');
 let slugdump = document.getElementById('slugdump');
 let alldump = document.getElementById('alldump');
@@ -11,24 +12,13 @@ let linkdump = document.getElementById('linkdump');
 
 let all_data = [],all_links=[];
 let all_icons,all_slugs;
+let copy_text = '';
 
 async function bring_icons(){
     let icons = await fetch('http://localhost:8000/badges');
     let icons_data = await icons.json();
     return icons_data;
 }
-
-// function log_icons(){
-//     bring_icons()
-//     .then(data => {
-//         // console.log(data.length);
-//         all_icons = data;
-//         // data.forEach(icon => {
-            
-//         // });
-//     })
-//     .catch(err => console.log(err));
-// }
 
 function log_icons(){
     bring_icons()
@@ -94,13 +84,15 @@ function log_links(){
         data.forEach(element => {
             element.table_category_name = element.table_category_name.toLowerCase().split('');
             let elem_name = element.table_category_name.filter((val) => (val>='a' && val<='z')||val === ' ');
+            let plastic_element;
             elem_name = elem_name.join('').trim();
             elem_name = elem_name[0].toUpperCase() + elem_name.slice(1);
             snippet += `<br/><br/><h3 class="mt-4">${elem_name}</h3><br/>`;
             // snippet += JSON.stringify(element)+'<br/>';
             for(let i=0;i<element.category_links_array.length;i++)
             {
-                snippet += `<button class="mt-2 badge-btn"><img src="${element.category_links_array[i]}" alt="badge"></button> &nbsp;`;
+                plastic_element = element.category_links_array[i].replace('for-the-badge','plastic');
+                snippet += `<button class="mt-2 badge-btn"><img src="${element.category_links_array[i]}" alt="badge"></button> &nbsp;\n<button class="mt-2 badge-btn"><img src="${plastic_element}" alt="badge"></button> &nbsp;`;
             }
         });
         linkdump.innerHTML = snippet;
@@ -111,6 +103,7 @@ function log_links(){
         for (let i = 0; i < buttonsCount; i += 1) {
             btns[i].onclick = function(e) {
                 console.log(this.firstChild.src);
+                copy_text += '![badge]('+this.firstChild.src + ')\n';
             };
         }
     })
@@ -130,6 +123,7 @@ function log_all(){
     .catch(err => console.log(err));
 }
 
+log_links();
 
 icon_button.addEventListener('click',async()=>{
     console.log('icon');
@@ -151,6 +145,8 @@ link_button.addEventListener('click',()=>{
     log_links();
 });
 
-
+copy_button.addEventListener('click',()=>{
+    navigator.clipboard.writeText(copy_text);
+})
 
 

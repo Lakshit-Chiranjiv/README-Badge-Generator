@@ -1,0 +1,5 @@
+![badge](https://img.shields.io/badge/Kibana-005571?style=plastic&logo=Kibana&logoColor=white)
+![badge](https://img.shields.io/badge/dev.to-0A0A0A?style=plastic&logo=devdotto&logoColor=white)
+![badge](https://img.shields.io/badge/Vercel-000000?style=plastic&logo=vercel&logoColor=white)
+![badge](https://img.shields.io/badge/Bitcoin-000000?style=plastic&logo=bitcoin&logoColor=white)
+![badge](https://img.shields.io/badge/Matomo-3152A0?style=plastic&logo=Matomo&logoColor=white)
