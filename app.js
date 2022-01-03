@@ -147,6 +147,7 @@ link_button.addEventListener('click',()=>{
 
 copy_button.addEventListener('click',()=>{
     navigator.clipboard.writeText(copy_text);
+    alert('Copied');
 })
 
 
